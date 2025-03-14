@@ -23,7 +23,7 @@
 
     <servlet-mapping>
         <servlet-name>TrackServlet</servlet-name>
-        <url-pattern>/tracks</url-pattern>
+        <url-pattern>/vm_music/tracks</url-pattern>
     </servlet-mapping>
 
 

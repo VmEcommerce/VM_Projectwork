@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.projectwork</groupId>
-  <artifactId>vm_music</artifactId>
+  <artifactId>vm-music</artifactId>
   <version>1.0.0</version>
 
-  <name>vm_music</name>
+  <name>vm-music</name>
   <packaging>war</packaging>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
@@ -59,7 +59,7 @@
   </dependencies>
 
   <build>
-  <finalName>vm_music</finalName>
+  <finalName>vm-music</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -106,7 +106,7 @@
             <artifactId>tomcat7-maven-plugin</artifactId>
             <version>2.2</version>
             <configuration>
-                <path>/vm_music</path>
+                <path>/vm-music</path>
                 <port>8080</port>
             </configuration>
         </plugin>
