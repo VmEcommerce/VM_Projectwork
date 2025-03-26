@@ -13,7 +13,7 @@
 
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/home/</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -25,6 +25,32 @@
         <servlet-name>TrackServlet</servlet-name>
         <url-pattern>/vm_music/tracks</url-pattern>
     </servlet-mapping>
+
+     <servlet>
+        <servlet-name>CarrelloServlet</servlet-name>
+        <servlet-class>com.projectwork.CarrelloServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CarrelloServlet</servlet-name>
+        <url-pattern>/vm_music/carrello</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DettaglioTrackServlet</servlet-name>
+        <servlet-class>com.projectwork.DettaglioTrackServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DettaglioTrackServlet</servlet-name>
+        <url-pattern>/vm_music/tracks/track</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/img/*</url-pattern>
+    </servlet-mapping>
+
 
 
 

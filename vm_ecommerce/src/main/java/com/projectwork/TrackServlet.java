@@ -17,14 +17,14 @@ import com.projectwork.services.TrackBi;
 @WebServlet("/tracks")
 public class TrackServlet extends HttpServlet{
 
-    public List<Track> tracks;
-
-    TrackBi trackList = new TrackBi();
+    private TrackBi trackList = new TrackBi();
 
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException
     {
+        List<Track> tracks = trackList.loadTrack();
         
-        request.setAttribute("libri", trackList.loadtrack());
+        request.setAttribute("tracks", trackList.loadTrack());
+
 
         request.getRequestDispatcher("/tracks.jsp").forward(request, response);
 

@@ -1,5 +1,9 @@
 com/projectwork/TrackServlet.class
-com/projectwork/HomeServlet.class
 com/projectwork/services/MongoDBConnector.class
-com/projectwork/services/TrackBi.class
 com/projectwork/entities/Track.class
+com/projectwork/entities/Carrello.class
+com/projectwork/CarrelloServlet.class
+com/projectwork/HomeServlet.class
+com/projectwork/services/TrackBi.class
+com/projectwork/DettaglioTrackServlet.class
+com/projectwork/services/CarrelloBI.class

@@ -2,7 +2,6 @@ package com.projectwork.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.bson.Document;
 
@@ -13,69 +12,73 @@ import com.projectwork.entities.Track;
 
 public class TrackBi {
 
-    public List<Track> tracks = new ArrayList<Track>();
+    private List<Track> tracks = new ArrayList<Track>();
 
-    public List<Track> loadtrack(){
-
-        if(tracks.isEmpty()){
-
-            this.resetCache();
-
+    public List<Track> loadTrack() {
+        if (tracks.isEmpty()) {
+            resetCache();
         }
+        return new ArrayList<Track>(tracks);
+    }
 
-        return tracks;
-
-    } 
-
-    public Track save(Track track)
-    {
-        
-        MongoCollection<Document> document = this.getCollection();
-        Gson gson = new Gson();
-
-        try
-        {   
-            track.setId(UUID.randomUUID().toString());
-            InsertOneResult resp = document.insertOne(Document.parse(gson.toJson(track)));
-            if(track.getId() != resp.getInsertedId().toString())
-            {
+   
+        public Track save(Track track) {
+            MongoCollection<Document> collection = this.getCollection();
+            Gson gson = new Gson();
+    
+            try {
+                Document doc = Document.parse(gson.toJson(track));
+    
+                // Se l'ID è nullo o vuoto, rimuovilo così MongoDB genera un nuovo _id automaticamente
+                if (track.get_id() == null || track.get_id().isEmpty()) {
+                    doc.remove("_id");
+                } else {
+                    // Se l'ID esiste, assicurati che sia una stringa
+                    doc.put("_id", track.get_id());
+                }
+    
+                InsertOneResult resp = collection.insertOne(doc);
+    
+                if (resp.getInsertedId() != null) {
+                    // Converte correttamente l'ID in stringa
+                    String insertedId = resp.getInsertedId().asObjectId().getValue().toString();
+                    track.set_id(insertedId); 
+    
+                    tracks.add(track); // Aggiungi il track alla cache
+                    return track;
+                } else {
+                    throw new Exception("Inserimento fallito");
+                }
+    
+            } catch (Exception e) {
+                e.printStackTrace();
                 return null;
             }
-
-        }catch(Exception e)
-        {
-            return null;
         }
-
-        this.resetCache();
-
-        return track;
-    }
-
-
-    public MongoCollection<Document> getCollection(){
-
-        MongoDBConnector mongodb = new MongoDBConnector();
-        
-        mongodb.setConnection();
-        mongodb.setDatabase("track");
-
-        MongoCollection<Document> document = mongodb.load("track");
-
-        return document;
-    }
-
-    private void resetCache(){
-
-        tracks = new ArrayList<Track>();
-
-        MongoCollection<Document> document = this.getCollection();
-
-        for (Document d : document.find()) {
-            Gson gson = new Gson();
-            Track track = gson.fromJson(d.toJson(), Track.class);
-            System.out.println(tracks.toString());
-            tracks.add(track);
+    
+        public MongoCollection<Document> getCollection() {
+            MongoDBConnector mongodb = new MongoDBConnector();
+            mongodb.setConnection();
+            mongodb.setDatabase("VM");
+            return mongodb.load("track"); // Nome corretto della collezione
+        }
+    
+        private void resetCache() {
+            this.tracks.clear(); 
+            MongoCollection<Document> collection = this.getCollection();
+            System.out.println("Numero di documenti trovati: " + collection.countDocuments());
+    
+            for (Document d : collection.find()) {
+                Gson gson = new Gson();
+                Track track = gson.fromJson(d.toJson(), Track.class);
+                this.tracks.add(track);
+            }
         }
     }
-}
+
+    
+
+    
+
+
+
